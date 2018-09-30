@@ -13,11 +13,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
+//import javafx.scene.control.Alert;
+//import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.text.Font;
+//import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -30,7 +30,6 @@ public class ListController {
 	Text title;
 
 	
-
 
 	private ObservableList<String> obsList;              
 
@@ -63,10 +62,6 @@ public class ListController {
 				ea.printStackTrace();
 			} 
 			  
-			      //alert.initModality(Modality.NONE);
-			//      alert.initOwner(mainStage);
-			 //     alert.setTitle("List Item");
-			 //     alert.showAndWait();
 			
 		}
 		catch(FileNotFoundException e) {
@@ -84,7 +79,7 @@ public class ListController {
 		// select the first item
 	      listView.getSelectionModel().select(0);
 	      
-	      newShowItem(mainStage);
+	      newShowItem();
 
 	      // set listener for the items
 	      listView
@@ -92,60 +87,33 @@ public class ListController {
 	        .selectedIndexProperty()
 	        .addListener(
 	           (obs, oldVal, newVal) -> 
-	               newShowItem(mainStage));
+	               newShowItem());
 	      
 	      
 
 	}
 	
-	private void newShowItem(Stage mainstage) {
+	
+	//Update the text with the currently selected string
+	private void newShowItem() {
 		
 		String content = "Title: " + listView.getSelectionModel().getSelectedIndex() + "\nArtist: " + listView.getSelectionModel().getSelectedItem()
 				+ "\nAlbum: " + listView.getSelectionModel().getSelectedItem()+ "\nYear: " + listView.getSelectionModel().getSelectedItem();
 		title.setText(content);
 		
 	}
-	
-	private void showItem(Stage mainStage) {                
-	      Alert alert = 
-	         new Alert(AlertType.INFORMATION);
-	      //alert.initModality(Modality.NONE);
-	      alert.initOwner(mainStage);
-	      alert.setTitle("List Item");
-	      alert.setHeaderText(
-	           "Selected list item properties");
 
-	      String content = "Index: " + 
-	          listView.getSelectionModel()
-	                   .getSelectedIndex() + 
-	          "\nValue: " + 
-	          listView.getSelectionModel()
-	                   .getSelectedItem();
 
-	          alert.setContentText(content);
-	          alert.showAndWait();
-	          //System.out.println("not blocking");
-	   }
-	/*
-	private void showItemInputDialog(Stage mainStage) {                
-	      String item = listView.getSelectionModel().getSelectedItem();
-	      int index = listView.getSelectionModel().getSelectedIndex();
 
-	      TextInputDialog dialog = new TextInputDialog(item);
-	      dialog.initOwner(mainStage); dialog.setTitle("List Item");
-	      dialog.setHeaderText("Selected Item (Index: " + index + ")");
-	      dialog.setContentText("Enter name: ");
-
-	      Optional<String> result = dialog.showAndWait();
-	      if (result.isPresent()) { obsList.set(index, result.get()); }
-	   }
-	   
-	   */
 	
 	@FXML protected void handleAddAction(ActionEvent event) {
+		
+		//Code to go to first place (Should be changed to sorted place afterwords
 		String item = "Enter song name";
 		int index = 0;
 		
+		
+		//Dialog box to get new name
 		TextInputDialog dialog = new TextInputDialog(item);
 	      dialog.setTitle("List Item");
 	      dialog.setHeaderText("Selected Item (Index: " + index + ")");
@@ -155,7 +123,7 @@ public class ListController {
 	      if (result.isPresent()) { obsList.add(index, result.get());}
 	      
 	     
-	      
+	      //Code to save file
 	      BufferedWriter writer;
 		FileWriter file;
 			try {
@@ -198,14 +166,21 @@ public class ListController {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} 
+			
+			
+			newShowItem();
 		
 		 
     }
 	
 	@FXML protected void handleEditAction(ActionEvent event) {
+		
+		 //Code to find item
+		
 		 String item = listView.getSelectionModel().getSelectedItem();
 	      int index = listView.getSelectionModel().getSelectedIndex();
 
+	      //Dialog box for new text
 	      TextInputDialog dialog = new TextInputDialog(item);
 	      dialog.setTitle("List Item");
 	      dialog.setHeaderText("Selected Item (Index: " + index + ")");
@@ -214,6 +189,8 @@ public class ListController {
 	      Optional<String> result = dialog.showAndWait();
 	      if (result.isPresent()) { obsList.set(index, result.get()); }
 	      
+	      
+	      //Code to save text
 	      BufferedWriter writer;
 			FileWriter file;
 				try {
@@ -256,14 +233,21 @@ public class ListController {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} 
+				
+				newShowItem();
    }
 	
 	@FXML protected void handleDeleteAction(ActionEvent event) {
-		 String item = listView.getSelectionModel().getSelectedItem();
+		
+		  //Finds current index and deletes
+
 	      int index = listView.getSelectionModel().getSelectedIndex();
 	      
 	      obsList.remove(index); 
 	      
+	      
+	      //Code under here saves the file
+	      
 	      BufferedWriter writer;
 			FileWriter file;
 				try {
@@ -308,7 +292,7 @@ public class ListController {
 				} 
 
 
-	
+				newShowItem();
 	     
   }
 
