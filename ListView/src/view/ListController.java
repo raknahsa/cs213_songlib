@@ -1,5 +1,10 @@
 package view;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -28,21 +33,47 @@ public class ListController {
 	public void start(Stage mainStage) {                
 		// create an ObservableList 
 		// from an ArrayList  
-		obsList = FXCollections.observableArrayList(                               
-				"Giants",                               
-				"Patriots",
-				"49ers",
-				"Rams",
-				"Packers",
-				"Colts",
-				"Cowboys",
-				"Broncos",
-				"Vikings",
-				"Dolphins",
-				"Titans",
-				"Seahawks",
-				"Steelers",
-				"Jaguars"); 
+		obsList = FXCollections.observableArrayList(); 
+		
+		File file = new File("song_list.txt"); 
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(file)); 
+			// Alert alert = 
+			//         new Alert(AlertType.INFORMATION);
+			String st; 
+			
+			int list_index = 0;
+			
+			try {
+				while ((st = br.readLine()) != null) {
+				    //String str = "test";
+					obsList.add(list_index, st);
+					//System.out.println(st);
+					list_index++;
+					//System.out.println(list_index);
+					
+				}
+				
+			} catch (IOException ea) {
+				// TODO Auto-generated catch block
+				ea.printStackTrace();
+			} 
+			  
+			      //alert.initModality(Modality.NONE);
+			//      alert.initOwner(mainStage);
+			 //     alert.setTitle("List Item");
+			 //     alert.showAndWait();
+			
+		}
+		catch(FileNotFoundException e) {
+			try {			
+				file.createNewFile();
+			}
+			catch(IOException io) {
+				
+			}
+		}
+		
 
 		listView.setItems(obsList); 
 		
