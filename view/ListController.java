@@ -1,9 +1,11 @@
 package view;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Optional;
 
@@ -151,6 +153,53 @@ public class ListController {
 		 
 	      Optional<String> result = dialog.showAndWait();
 	      if (result.isPresent()) { obsList.add(index, result.get());}
+	      
+	     
+	      
+	      BufferedWriter writer;
+		FileWriter file;
+			try {
+				file = new FileWriter("src/song_list.txt");
+				
+				 writer = new BufferedWriter(file);
+				 //writer.write(' ');
+				 	
+					
+					//int list_index = 0;
+					int list_size = obsList.size();
+					
+					for (int i = 0; i < list_size; i++) {
+					    //String str = "test";
+						try {
+							String st = obsList.get(i); 
+							//System.out.println("hi");
+							if (i == 0) {
+								writer.write(st);
+								writer.write('\n');
+							}
+							else {
+								writer.append(st);
+								writer.write('\n');
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						//System.out.println(st);
+						//list_index++;
+						//System.out.println(list_index);
+						
+					}
+					writer.close();
+						
+				 
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+		
+		 
     }
 	
 	@FXML protected void handleEditAction(ActionEvent event) {
@@ -164,15 +213,103 @@ public class ListController {
 
 	      Optional<String> result = dialog.showAndWait();
 	      if (result.isPresent()) { obsList.set(index, result.get()); }
+	      
+	      BufferedWriter writer;
+			FileWriter file;
+				try {
+					file = new FileWriter("src/song_list.txt");
+					
+					 writer = new BufferedWriter(file);
+					 //writer.write(' ');
+					 	
+						
+						//int list_index = 0;
+						int list_size = obsList.size();
+						
+						for (int i = 0; i < list_size; i++) {
+						    //String str = "test";
+							try {
+								String st = obsList.get(i); 
+								//System.out.println("hi");
+								if (i == 0) {
+									writer.write(st);
+									writer.write('\n');
+								}
+								else {
+									writer.append(st);
+									writer.write('\n');
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							//System.out.println(st);
+							//list_index++;
+							//System.out.println(list_index);
+							
+						}
+						writer.close();
+							
+					 
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
    }
 	
 	@FXML protected void handleDeleteAction(ActionEvent event) {
 		 String item = listView.getSelectionModel().getSelectedItem();
 	      int index = listView.getSelectionModel().getSelectedIndex();
+	      
+	      obsList.remove(index); 
+	      
+	      BufferedWriter writer;
+			FileWriter file;
+				try {
+					file = new FileWriter("src/song_list.txt");
+					
+					 writer = new BufferedWriter(file);
+					 //writer.write(' ');
+					 	
+						
+						//int list_index = 0;
+						int list_size = obsList.size();
+						
+						for (int i = 0; i < list_size; i++) {
+						    //String str = "test";
+							try {
+								String st = obsList.get(i); 
+								//System.out.println("hi");
+								if (i == 0) {
+									writer.write(st);
+									writer.write('\n');
+								}
+								else {
+									writer.append(st);
+									writer.write('\n');
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							
+							//System.out.println(st);
+							//list_index++;
+							//System.out.println(list_index);
+							
+						}
+						writer.close();
+							
+					 
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
 
 
 	
-	     obsList.remove(index); 
+	     
   }
 
 
