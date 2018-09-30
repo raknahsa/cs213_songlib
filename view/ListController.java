@@ -37,7 +37,7 @@ public class ListController {
 		// from an ArrayList  
 		obsList = FXCollections.observableArrayList(); 
 		
-		File file = new File("song_list.txt"); 
+		File file = new File("src/song_list.txt"); 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file)); 
 			// Alert alert = 
