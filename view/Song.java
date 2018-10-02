@@ -1,4 +1,4 @@
-package app;
+package view;
 
 public class Song implements Comparable<Song> {
 
@@ -26,7 +26,23 @@ public class Song implements Comparable<Song> {
 		return artist;
 	}
 	
+	public String getAlbum() {
+		return album;
+	}
 	
+	public String getYear() {
+		return year;
+	}
+	
+	public String toString()
+	{
+	      return title + "  by  " + artist;
+	}
+	
+	public String csvString()
+	{
+	      return title + "," + artist + "," + album + "," + year;
+	}
 	
 	
 	
