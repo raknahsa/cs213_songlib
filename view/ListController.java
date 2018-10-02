@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Optional;
 
 import javafx.collections.FXCollections;
@@ -35,7 +36,7 @@ public class ListController {
 	//int press = 1;
 	
 	@FXML         
-	ListView<String> listView;    
+	ListView<Song> listView;    
 	
 	@FXML
 	Text title;
@@ -48,16 +49,58 @@ public class ListController {
 
 	
 
-	private ObservableList<String> obsList;              
+	//private ObservableList<String> obsList;     
+	private ObservableList<Song> listSongs;
 
 	public void start(Stage mainStage) {                
 		// create an ObservableList 
 		// from an ArrayList  
+		
+		String csvFile = "src/song_list.csv";
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+
+        listSongs = FXCollections.observableArrayList();
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] details = line.split(cvsSplitBy);
+                
+                Song temp = new Song(details[0], details[1], details[2], details[3]);
+                listSongs.add(temp);
+                /*System.out.println("Title:"+details[0]);
+                System.out.println("Artist:"+details[1]);
+                System.out.println("Album:"+details[2]);
+                System.out.println("Year:"+details[3]);*/
+                
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        Collections.sort(listSongs);
+		
+/*		
 		obsList = FXCollections.observableArrayList(); 
 		
 		File file = new File("src/song_list.txt"); 
 		try {
-			BufferedReader br = new BufferedReader(new FileReader(file)); 
+			BufferedReader br1 = new BufferedReader(new FileReader(file)); 
 			// Alert alert = 
 			//         new Alert(AlertType.INFORMATION);
 			String st; 
@@ -65,7 +108,7 @@ public class ListController {
 			int list_index = 0;
 			
 			try {
-				while ((st = br.readLine()) != null) {
+				while ((st = br1.readLine()) != null) {
 				    //String str = "test";
 					obsList.add(list_index, st);
 					//System.out.println(st);
@@ -90,8 +133,9 @@ public class ListController {
 			}
 		}
 		
+*/		
 
-		listView.setItems(obsList); 
+		  listView.setItems(listSongs); 
 		
 		// select the first item
 	      listView.getSelectionModel().select(0);
@@ -133,10 +177,10 @@ public class ListController {
 		//title.setText(content);
 		
 		//titledata.setText(listView.getSelectionModel().getSelectedItem());
-		titledata.setText(listView.getSelectionModel().getSelectedItem());
-		artistdata.setText(listView.getSelectionModel().getSelectedItem());
-		albumdata.setText(listView.getSelectionModel().getSelectedItem());
-		yeardata.setText(listView.getSelectionModel().getSelectedItem());
+		titledata.setText(listSongs.get(listView.getSelectionModel().getSelectedIndex()).getTitle());
+		artistdata.setText(listSongs.get(listView.getSelectionModel().getSelectedIndex()).getArtist());
+		albumdata.setText(listSongs.get(listView.getSelectionModel().getSelectedIndex()).getAlbum());
+		yeardata.setText(listSongs.get(listView.getSelectionModel().getSelectedIndex()).getYear());
 	}
 
 
@@ -277,7 +321,7 @@ public class ListController {
 
 	      Optional<ButtonType> result = alert.showAndWait();
 	      if (result.get() == ButtonType.OK){
-	    	  obsList.remove(index); 
+	    	  listSongs.remove(index); 
 	      } else {
 	          // ... user chose CANCEL or closed the dialog
 	      }
@@ -290,27 +334,27 @@ public class ListController {
 	      BufferedWriter writer;
 			FileWriter file;
 				try {
-					file = new FileWriter("src/song_list.txt");
+					file = new FileWriter("src/song_list.csv");
 					
 					 writer = new BufferedWriter(file);
 					 //writer.write(' ');
 					 	
 						
 						//int list_index = 0;
-						int list_size = obsList.size();
+						int list_size = listSongs.size();
 						
 						for (int i = 0; i < list_size; i++) {
 						    //String str = "test";
 							try {
-								String st = obsList.get(i); 
+								Song st = listSongs.get(i); 
 								//System.out.println("hi");
 								if (i == 0) {
-									writer.write(st);
-									writer.write('\n');
+									writer.write(st.csvString());
+									writer.newLine();
 								}
 								else {
-									writer.append(st);
-									writer.write('\n');
+									writer.append(st.csvString());
+									writer.newLine();
 								}
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
@@ -337,35 +381,40 @@ public class ListController {
 	
 	@FXML protected void handleSaveEditAction(ActionEvent event) {
 		
-		 String item = titledata.getText();
+		// String title = titledata.getText();
+		// String album = albumdata.getText();
+		// String 
+		 
+		 Song temp = new Song(titledata.getText(), artistdata.getText(), albumdata.getText(), yeardata.getText());
+		 
 	     int index = listView.getSelectionModel().getSelectedIndex();
 		
 	     
-	      obsList.set(index, item);
+	      listSongs.set(index, temp);
 		
 		 BufferedWriter writer;
 			FileWriter file;
 				try {
-					file = new FileWriter("src/song_list.txt");
+					file = new FileWriter("src/song_list.csv");
 					
 					 writer = new BufferedWriter(file);
 					 //writer.write(' ');
 					 	
 						
 						//int list_index = 0;
-						int list_size = obsList.size();
+						int list_size = listSongs.size();
 						
 						for (int i = 0; i < list_size; i++) {
 						    //String str = "test";
 							try {
-								String st = obsList.get(i); 
+								Song st = listSongs.get(i); 
 								//System.out.println("hi");
 								if (i == 0) {
-									writer.write(st);
+									writer.write(st.csvString());
 									writer.write('\n');
 								}
 								else {
-									writer.append(st);
+									writer.append(st.csvString());
 									writer.write('\n');
 								}
 							} catch (IOException e) {
@@ -430,34 +479,35 @@ public class ListController {
 		
 		int index = 0;
 		
-		String item = titledata.getText();
+		//String item = titledata.getText();
+		Song temp = new Song(titledata.getText(), artistdata.getText(), albumdata.getText(), yeardata.getText());
 		
-		obsList.add(index, item);
+		listSongs.add(index, temp);
 		
 		   //Code to save file
 	      BufferedWriter writer;
 		FileWriter file;
 			try {
-				file = new FileWriter("src/song_list.txt");
+				file = new FileWriter("src/song_list.csv");
 				
 				 writer = new BufferedWriter(file);
 				 //writer.write(' ');
 				 	
 					
 					//int list_index = 0;
-					int list_size = obsList.size();
+					int list_size = listSongs.size();
 					
 					for (int i = 0; i < list_size; i++) {
 					    //String str = "test";
 						try {
-							String st = obsList.get(i); 
+							Song st = listSongs.get(i); 
 							//System.out.println("hi");
 							if (i == 0) {
-								writer.write(st);
+								writer.write(st.csvString());
 								writer.write('\n');
 							}
 							else {
-								writer.append(st);
+								writer.append(st.csvString());
 								writer.write('\n');
 							}
 						} catch (IOException e) {
