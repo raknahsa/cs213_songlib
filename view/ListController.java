@@ -221,6 +221,9 @@ public class ListController {
 	    yeardata.setEditable(true);
 		
 		titledata.setText("Enter song name");
+		artistdata.setText("Enter artist name");
+		albumdata.setText("Enter album name");
+		yeardata.setText("Enter year name");
 		/*
 		press = 1;
 		while (press == 1) {
