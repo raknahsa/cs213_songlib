@@ -1,4 +1,4 @@
-package app;
+package application;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import view.ListController;
 
-public class ListApp extends Application {
+public class SongLib extends Application {
 	@Override
 	public void start(Stage primaryStage) 
 	throws IOException {
