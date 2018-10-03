@@ -8,10 +8,10 @@
 
 <AnchorPane prefHeight="287.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.ListController">
 	<!-- TODO Add Nodes -->
-	<ListView fx:id="listView" layoutX="266.0" layoutY="13.0" prefHeight="219.0" prefWidth="243.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="266.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="13.0" />
- <Button fx:id="buttonAdd" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" layoutX="266.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleAddAction" prefHeight="26.0" prefWidth="106.0" text="Add Song" />
+	<ListView fx:id="listView" layoutX="266.0" layoutY="13.0" prefHeight="219.0" prefWidth="243.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="266.0" AnchorPane.rightAnchor="4.0" AnchorPane.topAnchor="13.0" onMouseClicked="#handleMouseClick"/>
+ <Button fx:id="buttonAdd" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" layoutX="266.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleAddAction" prefHeight="26.0" prefWidth="106.0" text="Add Song" />
    <Button fx:id="buttonEdit" alignment="BOTTOM_LEFT" layoutX="60.0" layoutY="203.0" mnemonicParsing="false" onAction="#handleEditAction" prefHeight="26.0" prefWidth="121.0" text="Edit Selected Song" />
-   <Button fx:id="buttonDelete" alignment="BOTTOM_LEFT" layoutX="381.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="26.0" prefWidth="114.0" text="Delete Song" />
+   <Button fx:id="buttonDelete" alignment="BOTTOM_LEFT" layoutX="381.0" layoutY="257.0" mnemonicParsing="false" onAction="#handleDeleteAction" prefHeight="26.0" prefWidth="114.0" text="Delete Song" />
    
    <Button fx:id="buttonSaveAdd" alignment="BOTTOM_LEFT" contentDisplay="BOTTOM" layoutX="60" layoutY="241.0" mnemonicParsing="false" onAction="#handleSaveAddAction" text="Save" />
     <Button fx:id="buttonCancelAdd" alignment="BOTTOM_LEFT" layoutX="130" layoutY="241.0" mnemonicParsing="false" onAction="#handleCancelAddAction" text="Cancel" />

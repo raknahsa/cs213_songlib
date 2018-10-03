@@ -61,10 +61,10 @@ public class Song implements Comparable<Song> {
 	      return 0;
 	    }
 	    
-	    if (getTitle().compareTo(u.getTitle()) == 0) {
-	    	return getArtist().compareTo(u.getArtist());
+	    if (getTitle().compareToIgnoreCase(u.getTitle()) == 0) {
+	    	return getArtist().compareToIgnoreCase(u.getArtist());
 	    }
-	    return getTitle().compareTo(u.getTitle());
+	    return getTitle().compareToIgnoreCase(u.getTitle());
 	}
 	
 }
